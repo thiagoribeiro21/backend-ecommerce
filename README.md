@@ -1,61 +1,125 @@
-# 🚀 Getting started with Strapi
+# 🌿 Nivos - Headless Commerce Engine (Backend)
 
-Strapi comes with a full featured [Command Line Interface](https://docs.strapi.io/dev-docs/cli) (CLI) which lets you scaffold and manage your project in seconds.
+> **API Restful para E-commerce de Alta Performance e Autonomia de Marketing.**
 
-### `develop`
+Este é o repositório do **Back-end** do projeto Nivos. Ele foi arquitetado utilizando **Strapi v5 (Headless CMS)** para servir como a fonte da verdade de dados, produtos e conteúdo para uma aplicação Front-end em Next.js.
 
-Start your Strapi application with autoReload enabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-develop)
-
-```
-npm run develop
-# or
-yarn develop
-```
-
-### `start`
-
-Start your Strapi application with autoReload disabled. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-start)
-
-```
-npm run start
-# or
-yarn start
-```
-
-### `build`
-
-Build your admin panel. [Learn more](https://docs.strapi.io/dev-docs/cli#strapi-build)
-
-```
-npm run build
-# or
-yarn build
-```
-
-## ⚙️ Deployment
-
-Strapi gives you many possible deployment options for your project including [Strapi Cloud](https://cloud.strapi.io). Browse the [deployment section of the documentation](https://docs.strapi.io/dev-docs/deployment) to find the best solution for your use case.
-
-```
-yarn strapi deploy
-```
-
-## 📚 Learn more
-
-- [Resource center](https://strapi.io/resource-center) - Strapi resource center.
-- [Strapi documentation](https://docs.strapi.io) - Official Strapi documentation.
-- [Strapi tutorials](https://strapi.io/tutorials) - List of tutorials made by the core team and the community.
-- [Strapi blog](https://strapi.io/blog) - Official Strapi blog containing articles made by the Strapi team and the community.
-- [Changelog](https://strapi.io/changelog) - Find out about the Strapi product updates, new features and general improvements.
-
-Feel free to check out the [Strapi GitHub repository](https://github.com/strapi/strapi). Your feedback and contributions are welcome!
-
-## ✨ Community
-
-- [Discord](https://discord.strapi.io) - Come chat with the Strapi community including the core team.
-- [Forum](https://forum.strapi.io/) - Place to discuss, ask questions and find answers, show your Strapi project and get feedback or just talk with other Community members.
-- [Awesome Strapi](https://github.com/strapi/awesome-strapi) - A curated list of awesome things related to Strapi.
+O foco deste projeto não é apenas "guardar dados", mas fornecer uma **arquitetura modular** onde a equipe de marketing tem autonomia para criar Landing Pages dinâmicas sem depender de deploy de código.
 
 ---
 
-<sub>🤫 Psst! [Strapi is hiring](https://strapi.io/careers).</sub>
+## 🚀 Diferenciais de Arquitetura (Agency Grade)
+
+Ao contrário de e-commerces tradicionais monolíticos, este projeto utiliza uma abordagem moderna focada em performance e flexibilidade:
+
+### 1. Fábrica de Landing Pages (Dynamic Zones)
+
+Implementação de um sistema de blocos modulares (`Blocks.Hero`, `Blocks.ProductGrid`, `Blocks.Newsletter`).
+
+- **Benefício:** O cliente pode criar campanhas (ex: Black Friday) montando a estrutura da página visualmente pelo CMS.
+- **Controle:** Opções de _Header Minimalista_ ou _Sem Header_ para foco total em conversão (Ads).
+
+### 2. Modelagem Avançada de SEO (`Shared.Seo`)
+
+Componente reutilizável injetado em todas as coleções (Produtos, Categorias e Blog).
+
+- **Travas de Segurança:** Limites de caracteres configurados no Strapi para `MetaTitle` (<60) e `MetaDescription` (<160) seguindo diretrizes do Google.
+- **Social Sharing:** Validação estrita para garantir que imagens de compartilhamento (OG Image) sejam leves.
+
+### 3. Gestão de Mídia Otimizada (Cloudinary)
+
+Uploads não sobrecarregam o servidor. O Strapi foi configurado com o provider do **Cloudinary**.
+
+- Entrega automática de formatos modernos (**WebP/AVIF**) dependendo do navegador do usuário.
+- Transformação de imagem _on-the-fly_ para performance no Front-end.
+
+---
+
+## 🛠️ Stack Tecnológico
+
+- **Core:** Strapi v5 (Community Edition)
+- **Linguagem:** TypeScript / Node.js
+- **Banco de Dados:** SQLite (Dev) / PostgreSQL (Produção/Render)
+- **Plugins Ativos:**
+  - `@strapi/provider-upload-cloudinary`: Gestão de ativos digitais.
+  - `Users & Permissions`: Controle de acesso público (API) e autenticado.
+
+---
+
+## 📦 Modelagem de Conteúdo (Content Types)
+
+A API expõe os seguintes endpoints públicos:
+
+| Collection        | Descrição                                                                                   |
+| :---------------- | :------------------------------------------------------------------------------------------ |
+| **Products**      | Catálogo com gestão de preço (`price`) e promoção (`salePrice`), controle de estoque e SEO. |
+| **Categories**    | Taxonomia para organização da loja.                                                         |
+| **Landing Pages** | Páginas de campanha com URL personalizada (`slug`) e layout flexível.                       |
+| **Posts (Blog)**  | Conteúdo rico com relação cruzada para produtos (Cross-selling).                            |
+
+---
+
+## ⚙️ Instalação e Execução
+
+### Pré-requisitos
+
+- Node.js >= 20 (ajustado conforme `package.json` do projeto)
+- Conta no Cloudinary (para as imagens)
+
+### Passo a Passo
+
+1. **Clone o repositório:**
+
+   ```bash
+   git clone <url-do-seu-repo>
+   cd backend-nivos
+   ```
+
+2. **Instale as dependências:**
+
+   ```bash
+   npm install
+   ```
+
+3. **Configure as Variáveis de Ambiente:**
+   Renomeie o arquivo `.env.example` para `.env` e preencha suas chaves do Cloudinary:
+
+   ```env
+   HOST=0.0.0.0
+   PORT=1337
+   APP_KEYS=... (gerados automaticamente)
+   API_TOKEN_SALT=...
+   ADMIN_JWT_SECRET=...
+   TRANSFER_TOKEN_SALT=...
+
+   # Cloudinary Config (Obrigatório para Imagens)
+   CLOUDINARY_NAME=seu_cloud_name
+   CLOUDINARY_KEY=sua_api_key
+   CLOUDINARY_SECRET=sua_api_secret
+   ```
+
+4. **Inicie o Servidor (Desenvolvimento):**
+
+   ```bash
+   npm run develop
+   ```
+
+   - **Painel Admin:** http://localhost:1337/admin
+
+   - **API:** http://localhost:1337/api
+
+---
+
+## 🔗 Links Relacionados
+
+- **Repositório Front-end (Next.js):** https://github.com/thiagoribeiro21/backend-ecommerce
+
+- **Deploy do Strapi (Render):** [Link do seu deploy se tiver]
+
+---
+
+## 📝 Licença
+
+Este projeto é um case de estudo para portfólio.
+
+---
