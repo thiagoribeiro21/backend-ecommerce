@@ -47,6 +47,16 @@
       "type": "component",
       "component": "shared.seo",
       "repeatable": false
+    },
+    "skinType": {
+      "type": "enumeration",
+      "enum": [
+        "Todas",
+        "Oleosa",
+        "Seca",
+        "Mista",
+        "Sensível"
+      ]
     }
   }
 }
