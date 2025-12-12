@@ -42,8 +42,15 @@
     },
     "products": {
       "type": "relation",
+      "relation": "manyToMany",
+      "target": "api::product.product",
+      "mappedBy": "orders"
+    },
+    "order_items": {
+      "type": "relation",
       "relation": "oneToMany",
-      "target": "api::product.product"
+      "target": "api::order-item.order-item",
+      "mappedBy": "order"
     }
   }
 }
